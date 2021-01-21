@@ -4,8 +4,8 @@ import (
 	"github.com/zofan/go-country"
 	"github.com/zofan/go-fwrite"
 	"github.com/zofan/go-req"
+	"github.com/zofan/go-xmlre"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -18,10 +18,10 @@ func Update() error {
 	)
 
 	var (
-		tableRe = regexp.MustCompile(`(?s)(<h3>.*?)</table>`)
-		nameRe  = regexp.MustCompile(`(?s)<h3>(.*?)</`)
-		rowRe   = regexp.MustCompile(`(?s)<tr>(.*?)</tr>`)
-		colsRe  = regexp.MustCompile(`(?s)<td[^>]*>(.*?)</td>`)
+		tableRe = xmlre.Compile(`(<h3>.*?)</table>`)
+		nameRe  = xmlre.Compile(`<h3>(.*?)</`)
+		rowRe   = xmlre.Compile(`<tr>(.*?)</tr>`)
+		colsRe  = xmlre.Compile(`<td>(.*?)</td>`)
 	)
 
 	resp := httpClient.Get(`https://cellidfinder.com/mcc-mnc`)
